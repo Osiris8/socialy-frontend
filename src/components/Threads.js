@@ -9,7 +9,7 @@ function Threads({ userId }) {
     });
   }, []);
   return (
-    <div>
+    <div className="container">
       {posts.map((post) => (
         <Post key={post._id} post={post} userId={userId} />
       ))}
