@@ -1,5 +1,6 @@
 import React from "react";
-
+import NewPost from "./components/NewPost";
+import Threads from "./components/Threads";
 function App() {
   const [userId, setUserId] = React.useState("");
   return (
@@ -7,10 +8,13 @@ function App() {
       <input
         type="text"
         placeholder="Entrez votre nom"
-        className="p-2 rounded-md border-2 border-black w-96 m-8"
+        className="p-2 border-2 rounded border-indigo-500/100 w-96 m-2"
         onChange={(e) => setUserId(e.target.value)}
       />
-      <div className="p-2 rounded-md border-2 shadow-sm w-96 m-8">{userId}</div>
+      <div className="w-96 m-2">
+        <NewPost userId={userId} />
+        <Threads userId={userId} />
+      </div>
     </div>
   );
 }
