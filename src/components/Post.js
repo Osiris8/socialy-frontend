@@ -1,4 +1,5 @@
 import React from "react";
+import LikePost from "./LikePost";
 function Post({ post, userId }) {
   const dateFormater = (date) => {
     return new Date(date).toLocaleDateString("fr-FR", {
@@ -23,6 +24,7 @@ function Post({ post, userId }) {
         <span>
           <i class="fa fa-heart text-indigo-500/100" aria-hidden="true"></i>
         </span>
+        <LikePost post={post} userId={userId} />
       </p>
     </div>
   );
