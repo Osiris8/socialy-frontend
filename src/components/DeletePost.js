@@ -12,7 +12,7 @@ function DeletePost({ postId }) {
       }}
       className="text-red-500"
     >
-      <i class="fa fa-trash text-red-500" aria-hidden="true"></i>
+      <i className="fa fa-trash text-red-500" aria-hidden="true"></i>
     </span>
   );
 }
