@@ -1,6 +1,27 @@
 import React from "react";
 import LikePost from "./LikePost";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import DeletePost from "./DeletePost";
 function Post({ post, userId }) {
+  const [isAuthor, setIsAuthor] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [newMessage, setNewMessage] = useState("");
+  useEffect(() => {
+    if (post.author === userId) {
+      setIsAuthor(true);
+    } else {
+      setIsAuthor(false);
+    }
+  }, [userId, post.author]);
+
+  const handleEdit = () => {
+    if (newMessage) {
+      axios.put("http://localhost:5000/start/" + post._id, {
+        message: newMessage,
+      });
+    }
+  };
   const dateFormater = (date) => {
     return new Date(date).toLocaleDateString("fr-FR", {
       weekday: "long",
@@ -18,14 +39,46 @@ function Post({ post, userId }) {
         <h3 className="font-bold text-indigo-500">{post.author}</h3>
         <p className="italic">posté le {dateFormater(post.createdAt)}</p>
       </div>
-      <p className="p-2">{post.message}</p>
-      <p>
-        <span className="p-2">0</span>
-        <span>
-          <i class="fa fa-heart text-indigo-500/100" aria-hidden="true"></i>
-        </span>
+      {isEdit ? (
+        <form className="flex flex-col align-center">
+          <textarea
+            defaultValue={post.message}
+            className="p-2 border-2 rounded border-indigo-500/100 m-2"
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button
+            className="rounded bg-indigo-500/100 p-2 text-white fond-bold m-2"
+            onClick={() => {
+              setIsEdit(false);
+              handleEdit();
+            }}
+          >
+            Editer
+          </button>
+        </form>
+      ) : (
+        <p>{newMessage ? newMessage : post.message}</p>
+      )}
+      <div className="flex justify-between">
         <LikePost post={post} userId={userId} />
-      </p>
+
+        {isAuthor && (
+          <div>
+            <span className="m-2">
+              <i
+                className="fa fa-pencil-square text-gray-400 "
+                aria-hidden="true"
+                onClick={() => {
+                  setIsEdit(!isEdit);
+                  handleEdit();
+                }}
+              ></i>
+            </span>
+
+            <DeletePost postId={post._id} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
