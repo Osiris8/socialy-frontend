@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NewPost from "./components/NewPost";
 import Threads from "./components/Threads";
+import { useDispatch } from "react-redux";
+import { getUser } from "./feature/user.slice";
 function App() {
-  const [userId, setUserId] = React.useState("");
+  const [userId, setUserId] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser(userId));
+  }, [userId, dispatch]);
   return (
     <div className="container mx-auto h-full w-full flex flex-col justify-center items-center">
       <input
