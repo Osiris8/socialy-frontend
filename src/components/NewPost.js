@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-function NewPost({ userId }) {
+import { useSelector } from "react-redux";
+function NewPost() {
   const [message, setMessage] = useState("");
+  const userId = useSelector((state) => state.user.userId);
   const handleForm = (e) => {
     e.preventDefault();
     axios.post("http://localhost:5000/start", {
