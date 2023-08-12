@@ -3,10 +3,12 @@ import LikePost from "./LikePost";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DeletePost from "./DeletePost";
-function Post({ post, userId }) {
+import { useSelector } from "react-redux";
+function Post({ post }) {
   const [isAuthor, setIsAuthor] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  const userId = useSelector((state) => state.user.userId);
   useEffect(() => {
     if (post.author === userId) {
       setIsAuthor(true);
