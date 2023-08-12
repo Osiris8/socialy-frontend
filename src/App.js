@@ -19,8 +19,8 @@ function App() {
         onChange={(e) => setUserId(e.target.value)}
       />
       <div className="w-96 m-2">
-        <NewPost userId={userId} />
-        <Threads userId={userId} />
+        <NewPost />
+        <Threads />
       </div>
     </div>
   );
