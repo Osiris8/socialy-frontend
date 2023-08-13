@@ -1,8 +1,12 @@
 import React from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../feature/post.slice";
 function DeletePost({ postId }) {
+  const dispatch = useDispatch();
   const handleDelete = () => {
     axios.delete("http://localhost:5000/start/" + postId);
+    dispatch(deletePost(postId));
   };
   return (
     <span
