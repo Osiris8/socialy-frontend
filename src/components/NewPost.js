@@ -1,15 +1,25 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getPosts, createPost } from "../feature/post.slice";
 function NewPost() {
   const [message, setMessage] = useState("");
   const userId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
   const handleForm = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/start", {
+    const data = {
       author: userId,
       message: message,
+      //creation id provisoire avant le retour de la B
+      _id: Date.now(),
+    };
+
+    axios.post("http://localhost:5000/start", data).then((res) => {
+      dispatch(createPost(data));
+      //On fait un getpost afin de chercher l'id par mongodb et l'afficher dans redux store
+      dispatch(getPosts());
     });
     setMessage("");
   };
